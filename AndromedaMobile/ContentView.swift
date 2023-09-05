@@ -7,6 +7,7 @@
 
 import AVFoundation
 import SwiftUI
+import Foundation
 
 
 struct Message: Identifiable, Codable {
@@ -114,6 +115,64 @@ struct ContentView: View {
         }
     }
 
+    // FIXME: currently getting 400 response code = bad request
+    func uploadAudio() {
+        guard let audioURL = self.audioURL else { return }
+
+        let headers = [
+          "accept": "application/json",
+          "content-type": "multipart/form-data; boundary=---011000010111000001101001",
+          "X-Hume-Api-Key": "niMgijWBGoV63fLvAHjrcDXS7Z8uo8Grf4xnwysYmLobobcd"
+        ]
+        
+        let boundary = "---011000010111000001101001"
+        
+        var request = URLRequest(url: URL(string: "https://api.hume.ai/v0/batch/jobs")!)
+        request.httpMethod = "POST"
+        request.allHTTPHeaderFields = headers
+
+        var body = Data()
+
+        body.append("--\(boundary)\r\n".data(using: .utf8)!)
+        body.append("Content-Disposition: form-data; name=\"audio\"; filename=\"audio\"\r\n".data(using: .utf8)!)
+        body.append("Content-Type: audio/wav\r\n\r\n".data(using: .utf8)!)
+        do {
+            let audioData = try Data(contentsOf: audioURL)
+            body.append(audioData)
+        } catch {
+            print("Audio data could not be read")
+            return
+        }
+        
+        body.append("\r\n--\(boundary)--\r\n".data(using: .utf8)!)
+        
+        request.httpBody = body
+
+        let session = URLSession.shared
+        
+        let dataTask = session.dataTask(with: request) { (data, response, error) in
+            if let error = error {
+                print("Error: \(error)")
+            } else if let httpResponse = response as? HTTPURLResponse {
+                print("HTTP Status: \(httpResponse.statusCode)")
+            } else if let data = data {
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+                    if let transcript = json?["transcript"] as? String {
+                        DispatchQueue.main.async {
+                            self.messages.append(Message(audioURL: audioURL, transcript: transcript, timestamp: dateFormatter.string(from: Date())))
+                        }
+                    }
+                } catch {
+                    print("JSON decoding failed: \(error)")
+                }
+            }
+        }
+        
+        dataTask.resume()
+    }
+
+
     
     var body: some View {
         NavigationView {
@@ -121,16 +180,11 @@ struct ContentView: View {
                 List {
                     ForEach(messages, id: \.id) { msg in
                         HStack {
-                            // Existing code to display message...
+                            // TODO: Existing code to display message...
                             Button(action: {
                                 self.audioRecorder.playAudio(path: msg.audioURL)
                             }) {
                                 Image(systemName: "play.fill")
-                            }
-                            Button(action: {
-                                // Code to delete message
-                            }) {
-                                Image(systemName: "trash.fill")
                             }
                         }
                     }
@@ -156,7 +210,8 @@ struct ContentView: View {
                                 .frame(width: 40, height: 50)
                         }
                         Button(action: {
-                            // Code to "send" your audio message
+                            uploadAudio()
+                            showControls = false
                         }) {
                             Image(systemName: "arrow.up.circle.fill")
                                 .resizable()
