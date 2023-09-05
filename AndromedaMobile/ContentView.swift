@@ -33,9 +33,9 @@ class AudioRecorder: ObservableObject {
         
         let settings = [
             AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
-            AVSampleRateKey: 12000,
-            AVNumberOfChannelsKey: 1,
-            AVEncoderAudioQualityKey: AVAudioQuality.medium.rawValue
+            AVSampleRateKey: 44100,
+            AVNumberOfChannelsKey: 2,
+            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
         ]
         
         do {
@@ -55,10 +55,14 @@ class AudioRecorder: ObservableObject {
     
     func playAudio(path: URL) {
         do {
-            audioPlayer = try AVAudioPlayer(contentsOf: path)
-            audioPlayer.play()
+            // Configure the audio session for playback through the main speaker
+            let audioSession = AVAudioSession.sharedInstance()
+            try audioSession.setCategory(.playAndRecord, mode: .default, options: .defaultToSpeaker)
+            
+            self.audioPlayer = try AVAudioPlayer(contentsOf: path)
+            self.audioPlayer?.play()
         } catch {
-            print("Couldn't load audio \(error)")
+            print("Audio playback failed")
         }
     }
 
@@ -70,6 +74,9 @@ struct ContentView: View {
     @State private var messages: [Message] = []
     @State private var showSettings = false
     @State private var darkMode = UserDefaults.standard.bool(forKey: "DarkMode")
+    
+    @State private var showingAlert = false
+    @State private var alertMessage = ""
 
     @State private var audioURL: URL? = nil
     @State private var isRecording = false
@@ -83,6 +90,20 @@ struct ContentView: View {
     }
     
     func toggleRecording() {
+        do {
+            let audioSession = AVAudioSession.sharedInstance()
+            if audioSession.isOtherAudioPlaying {
+                try audioSession.setActive(false, options: .notifyOthersOnDeactivation)
+            }
+            try audioSession.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker])
+            try audioSession.setActive(true)
+        } catch {
+            print("Couldn't set up audio session")
+            self.showingAlert = true
+            self.alertMessage = "Audio playback failed"
+        }
+
+        
         isRecording.toggle()
         
         if isRecording {
@@ -167,6 +188,9 @@ struct ContentView: View {
                     self.messages = savedMessages
                 }
             }
+        }
+        .alert(isPresented: $showingAlert) {
+            Alert(title: Text("Error"), message: Text(self.alertMessage), dismissButton: .default(Text("Got it")))
         }
     }
 }
