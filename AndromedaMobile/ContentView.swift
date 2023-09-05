@@ -123,28 +123,33 @@ struct ContentView: View {
                             }
                         }) {
                             Image(systemName: "play.fill")
+                                .resizable()
+                                .frame(width: 40, height: 50)
                         }
                         Button(action: {
                             audioURL = nil
                             showControls = false
                         }) {
                             Image(systemName: "trash.fill")
+                                .resizable()
+                                .frame(width: 40, height: 50)
                         }
                         Button(action: {
                             // Code to "send" your audio message
                         }) {
                             Image(systemName: "arrow.up.circle.fill")
+                                .resizable()
+                                .frame(width: 40, height: 50)
                         }
                     }
                     .padding()
                 } else {
                     Button(action: toggleRecording) {
                         Image(systemName: "mic.fill")
-//                            .resizable()
-//                            .frame(width: 40, height: 40)
+                            .resizable()
+                            .frame(width: 40, height: 60)
                             .foregroundColor(isRecording ? Color.red : Color.blue)
                     }
-                    .padding()
                 }
             }
             .navigationBarItems(trailing:
