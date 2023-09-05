@@ -7,17 +7,31 @@
 
 import SwiftUI
 
+
+struct Message: Identifiable, Codable {
+    var id = UUID()
+    var text: String
+    var timestamp: String
+}
+
 struct ContentView: View {
     @State private var messageText: String = ""
-    @State private var messages: [(text: String, timestamp: String)] = []
-    @State private var darkMode: Bool = false
+    @State private var messages: [Message] = []
+    @State private var showSettings = false
+    @State private var darkMode = UserDefaults.standard.bool(forKey: "DarkMode")
+    
+    var dateFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd MMM HH:mm"
+        return formatter
+    }
     
     var body: some View {
         NavigationView {
             VStack {
                 // Scrollable message area
                 List {
-                    ForEach(messages, id: \.timestamp) { msg in
+                    ForEach(messages, id: \.id) { msg in
                         HStack {
                             Text(msg.text)
                                 .padding()
@@ -39,26 +53,61 @@ struct ContentView: View {
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                     
                     Button("Send") {
-                        let timestamp = "\(Date())"
-                        messages.append((text: messageText, timestamp: timestamp))
+                        let timestamp = dateFormatter.string(from: Date())
+                        let newMessage = Message(text: messageText, timestamp: timestamp)
+                        messages.append(newMessage)
+                        
+                        if let encoded = try? JSONEncoder().encode(messages) {
+                            UserDefaults.standard.set(encoded, forKey: "Messages")
+                        }
                         messageText = ""
                     }
+
                 }
                 .padding()
             }
             .navigationBarItems(trailing:
-                HStack {
-                    // Dark mode toggle
-                    Toggle(isOn: $darkMode) {
-                        Text("Dark Mode")
-                    }
-                    .toggleStyle(SwitchToggleStyle(tint: .blue))
+                Button(action: { showSettings.toggle() }) {
+                    Image(systemName: "line.horizontal.3")
+                }
+                .sheet(isPresented: $showSettings) {
+                    SettingsView(darkMode: $darkMode)
                 }
             )
             .preferredColorScheme(darkMode ? .dark : .light)
+            .onAppear {
+                if let savedMessagesData = UserDefaults.standard.value(forKey: "Messages") as? Data,
+                   let savedMessages = try? JSONDecoder().decode([Message].self, from: savedMessagesData) {
+                    self.messages = savedMessages
+                }
+            }
         }
     }
 }
+
+struct SettingsView: View {
+    @Binding var darkMode: Bool
+    @State private var dummyToggle1 = false
+    @State private var dummyToggle2 = false
+    @State private var dummyToggle3 = false
+    
+    var body: some View {
+        NavigationView {
+            Form {
+                Toggle("Dark Mode", isOn: $darkMode)
+                    .onChange(of: darkMode) { newValue in
+                        UserDefaults.standard.set(newValue, forKey: "DarkMode")
+                    }
+                
+                Toggle("Dummy Toggle 1", isOn: $dummyToggle1)
+                Toggle("Dummy Toggle 2", isOn: $dummyToggle2)
+                Toggle("Dummy Toggle 3", isOn: $dummyToggle3)
+            }
+            .navigationBarTitle("Settings")
+        }
+    }
+}
+
 
 
 struct ContentView_Previews: PreviewProvider {
