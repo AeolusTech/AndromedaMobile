@@ -71,6 +71,9 @@ struct ContentView: View {
     @State private var showSettings = false
     @State private var darkMode = UserDefaults.standard.bool(forKey: "DarkMode")
 
+    @State private var audioURL: URL? = nil
+    @State private var isRecording = false
+    @State private var showControls = false
     @ObservedObject private var audioRecorder = AudioRecorder()
     
     var dateFormatter: DateFormatter {
@@ -78,6 +81,18 @@ struct ContentView: View {
         formatter.dateFormat = "dd MMM HH:mm"
         return formatter
     }
+    
+    func toggleRecording() {
+        isRecording.toggle()
+        
+        if isRecording {
+            audioRecorder.startRecording()
+        } else {
+            audioURL = audioRecorder.stopRecording()
+            showControls = true  // another boolean to decide whether to show Play, Trash, Send buttons
+        }
+    }
+
     
     var body: some View {
         NavigationView {
@@ -98,27 +113,39 @@ struct ContentView: View {
                             }
                         }
                     }
-
                 }
                 
-                HStack {
-                    
-                    Button(action: {
-                        if self.audioRecorder.audioRecorder == nil {
-                            self.audioRecorder.startRecording()
-                        } else {
-                            let audioURL = self.audioRecorder.stopRecording()
-                            let timestamp = dateFormatter.string(from: Date())
-                            // Assume you have a way to get a transcript, placeholder for now
-                            let newMessage = Message(audioURL: audioURL, transcript: "Placeholder", timestamp: timestamp)
-                            messages.append(newMessage)
+                if showControls {
+                    HStack {
+                        Button(action: {
+                            if let safeURL = audioURL {
+                                audioRecorder.playAudio(path: safeURL)
+                            }
+                        }) {
+                            Image(systemName: "play.fill")
                         }
-                    }) {
-                        Image(systemName: "mic.fill")
+                        Button(action: {
+                            audioURL = nil
+                            showControls = false
+                        }) {
+                            Image(systemName: "trash.fill")
+                        }
+                        Button(action: {
+                            // Code to "send" your audio message
+                        }) {
+                            Image(systemName: "arrow.up.circle.fill")
+                        }
                     }
-
+                    .padding()
+                } else {
+                    Button(action: toggleRecording) {
+                        Image(systemName: "mic.fill")
+//                            .resizable()
+//                            .frame(width: 40, height: 40)
+                            .foregroundColor(isRecording ? Color.red : Color.blue)
+                    }
+                    .padding()
                 }
-                .padding()
             }
             .navigationBarItems(trailing:
                 Button(action: { showSettings.toggle() }) {
