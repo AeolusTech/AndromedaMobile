@@ -5,20 +5,73 @@
 //  Created by Kamil Kuczaj on 05/09/2023.
 //
 
+import AVFoundation
 import SwiftUI
 
 
 struct Message: Identifiable, Codable {
     var id = UUID()
-    var text: String
+    var audioURL: URL
+    var transcript: String
     var timestamp: String
 }
+
+
+class AudioRecorder: ObservableObject {
+    
+    var audioRecorder: AVAudioRecorder!
+    var audioPlayer: AVAudioPlayer!
+    
+    func getDocumentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return paths[0]
+    }
+
+    
+    func startRecording() {
+        let audioFilename = getDocumentsDirectory().appendingPathComponent("\(Date().timeIntervalSince1970).m4a")
+        
+        let settings = [
+            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
+            AVSampleRateKey: 12000,
+            AVNumberOfChannelsKey: 1,
+            AVEncoderAudioQualityKey: AVAudioQuality.medium.rawValue
+        ]
+        
+        do {
+            audioRecorder = try AVAudioRecorder(url: audioFilename, settings: settings)
+            audioRecorder.record()
+        } catch {
+            print("Could not start recording")
+        }
+    }
+
+    
+    func stopRecording() -> URL {
+        audioRecorder.stop()
+        return audioRecorder.url
+    }
+
+    
+    func playAudio(path: URL) {
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: path)
+            audioPlayer.play()
+        } catch {
+            print("Couldn't load audio \(error)")
+        }
+    }
+
+}
+
 
 struct ContentView: View {
     @State private var messageText: String = ""
     @State private var messages: [Message] = []
     @State private var showSettings = false
     @State private var darkMode = UserDefaults.standard.bool(forKey: "DarkMode")
+
+    @ObservedObject private var audioRecorder = AudioRecorder()
     
     var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
@@ -29,38 +82,39 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             VStack {
-                // Scrollable message area
                 List {
                     ForEach(messages, id: \.id) { msg in
                         HStack {
-                            Text(msg.text)
-                                .padding()
-                                .background(RoundedRectangle(cornerRadius: 12).fill(Color.blue))
-                                .foregroundColor(.white)
-                            
-                            Spacer()
-                            
-                            Text(msg.timestamp)
-                                .font(.footnote)
-                                .foregroundColor(.gray)
+                            // Existing code to display message...
+                            Button(action: {
+                                self.audioRecorder.playAudio(path: msg.audioURL)
+                            }) {
+                                Image(systemName: "play.fill")
+                            }
+                            Button(action: {
+                                // Code to delete message
+                            }) {
+                                Image(systemName: "trash.fill")
+                            }
                         }
                     }
+
                 }
                 
-                // Text box & send button
                 HStack {
-                    TextField("Type your message...", text: $messageText)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
                     
-                    Button("Send") {
-                        let timestamp = dateFormatter.string(from: Date())
-                        let newMessage = Message(text: messageText, timestamp: timestamp)
-                        messages.append(newMessage)
-                        
-                        if let encoded = try? JSONEncoder().encode(messages) {
-                            UserDefaults.standard.set(encoded, forKey: "Messages")
+                    Button(action: {
+                        if self.audioRecorder.audioRecorder == nil {
+                            self.audioRecorder.startRecording()
+                        } else {
+                            let audioURL = self.audioRecorder.stopRecording()
+                            let timestamp = dateFormatter.string(from: Date())
+                            // Assume you have a way to get a transcript, placeholder for now
+                            let newMessage = Message(audioURL: audioURL, transcript: "Placeholder", timestamp: timestamp)
+                            messages.append(newMessage)
                         }
-                        messageText = ""
+                    }) {
+                        Image(systemName: "mic.fill")
                     }
 
                 }
