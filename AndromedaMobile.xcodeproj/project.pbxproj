@@ -19,6 +19,8 @@
 		439FDBE42AAA38230001E4B9 /* firstAudioEN.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 439FDBE02AAA38230001E4B9 /* firstAudioEN.m4a */; };
 		439FDBE52AAA38230001E4B9 /* feedbackEN.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 439FDBE12AAA38230001E4B9 /* feedbackEN.m4a */; };
 		439FDBE82AAA38FC0001E4B9 /* AudioHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439FDBE72AAA38FC0001E4B9 /* AudioHandler.swift */; };
+		439FDBEA2AAA4A820001E4B9 /* MessengerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439FDBE92AAA4A820001E4B9 /* MessengerView.swift */; };
+		439FDBEC2AAA4B8E0001E4B9 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439FDBEB2AAA4B8E0001E4B9 /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +57,8 @@
 		439FDBE02AAA38230001E4B9 /* firstAudioEN.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = firstAudioEN.m4a; sourceTree = "<group>"; };
 		439FDBE12AAA38230001E4B9 /* feedbackEN.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = feedbackEN.m4a; sourceTree = "<group>"; };
 		439FDBE72AAA38FC0001E4B9 /* AudioHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioHandler.swift; sourceTree = "<group>"; };
+		439FDBE92AAA4A820001E4B9 /* MessengerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessengerView.swift; sourceTree = "<group>"; };
+		439FDBEB2AAA4B8E0001E4B9 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +116,8 @@
 				4305EBAE2AA7838A00908052 /* ContentView.swift */,
 				4305EBB02AA7838B00908052 /* Assets.xcassets */,
 				4305EBB22AA7838B00908052 /* Preview Content */,
+				439FDBE92AAA4A820001E4B9 /* MessengerView.swift */,
+				439FDBEB2AAA4B8E0001E4B9 /* SettingsView.swift */,
 			);
 			path = AndromedaMobile;
 			sourceTree = "<group>";
@@ -288,7 +294,9 @@
 			files = (
 				4305EBAF2AA7838A00908052 /* ContentView.swift in Sources */,
 				439FDBE82AAA38FC0001E4B9 /* AudioHandler.swift in Sources */,
+				439FDBEA2AAA4A820001E4B9 /* MessengerView.swift in Sources */,
 				4305EBAD2AA7838A00908052 /* AndromedaMobileApp.swift in Sources */,
+				439FDBEC2AAA4B8E0001E4B9 /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
