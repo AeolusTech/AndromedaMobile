@@ -256,6 +256,13 @@ struct SettingsView: View {
     @State private var dummyToggle2 = false
     @State private var dummyToggle3 = false
     
+    @ObservedObject private var audioRecorder = AudioRecorder()
+    
+    let audioURLfirstAudioEN = getAudioURL(filename: "firstAudioEN", type: "m4a")
+    let audioURLfeedbackEN = getAudioURL(filename: "feedbackEN", type: "m4a")
+    let audioURLfirstAudioPL = getAudioURL(filename: "firstAudioPL", type: "m4a")
+    let audioURLfeedbackPL = getAudioURL(filename: "feedbackPL", type: "m4a")
+    
     var body: some View {
         NavigationView {
             Form {
@@ -267,6 +274,39 @@ struct SettingsView: View {
                 Toggle("Dummy Toggle 1", isOn: $dummyToggle1)
                 Toggle("Dummy Toggle 2", isOn: $dummyToggle2)
                 Toggle("Dummy Toggle 3", isOn: $dummyToggle3)
+
+                Button(action: {
+                    print("First audio PL")
+                    if let safeURL = audioURLfirstAudioPL {
+                        audioRecorder.playAudio(path: safeURL)
+                    }
+                }) {
+                    Text("First audio PL")
+                }
+                Button(action: {
+                    print("Feedback PL")
+                    if let safeURL = audioURLfeedbackPL {
+                        audioRecorder.playAudio(path: safeURL)
+                    }
+                }) {
+                    Text("Feedback PL")
+                }
+                Button(action: {
+                    print("First audio EN")
+                    if let safeURL = audioURLfirstAudioEN {
+                        audioRecorder.playAudio(path: safeURL)
+                    }
+                }) {
+                    Text("First audio EN")
+                }
+                Button(action: {
+                    print("Feedback EN")
+                    if let safeURL = audioURLfeedbackEN {
+                        audioRecorder.playAudio(path: safeURL)
+                    }
+                }) {
+                    Text("Feedback EN")
+                }
             }
             .navigationBarTitle("Settings")
         }
@@ -278,5 +318,14 @@ struct SettingsView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+    }
+}
+
+struct SettignsView_Previews: PreviewProvider {
+    @State static var mockDarkMode = false // Or true, depending on what you want to preview
+
+    
+    static var previews: some View {
+        SettingsView(darkMode: $mockDarkMode)
     }
 }
