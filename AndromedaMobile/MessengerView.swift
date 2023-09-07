@@ -19,7 +19,7 @@ struct MessengerView: View {
             ScrollView {
                 VStack {
                     // Do this for each entry
-                    NavigationLink(destination: ContentView()) {
+                    NavigationLink(destination: ContactView(contactName: weronikaName)) {
                         HStack {
                             Image("sasha")
                                 .resizable()
@@ -28,7 +28,7 @@ struct MessengerView: View {
                                 .clipShape(Circle())
                                 .padding(.leading, 20)
                             
-                            Text("Weronika 🙋🏼‍♀️")
+                            Text(weronikaName)
                                 .font(.title2)
                                 .padding(.leading, 15)
                                 .padding()
@@ -38,7 +38,7 @@ struct MessengerView: View {
                         .padding(.bottom, 10)
                     }
 
-                    NavigationLink(destination: ContentView()) {
+                    NavigationLink(destination: ContactView(contactName: babeName)) {
                         HStack {
                             Image("mia")
                                 .resizable()
@@ -47,7 +47,7 @@ struct MessengerView: View {
                                 .clipShape(Circle())
                                 .padding(.leading, 20)
 
-                            Text("Babe ❤️")
+                            Text(babeName)
                                 .font(.title2)
                                 .padding(.leading, 15)
                                 .padding()
@@ -58,7 +58,7 @@ struct MessengerView: View {
                     }
                 }
             }
-            .navigationBarTitle("Messenger", displayMode: .inline)
+            .navigationBarTitle("🚀 Andromeda 💫", displayMode: .inline)
             .navigationBarItems(trailing:
                 Button(action: { showSettings.toggle() }) {
                     Image(systemName: "gearshape.fill")
@@ -71,6 +71,7 @@ struct MessengerView: View {
                     )
                 }
             )
+            .preferredColorScheme(darkMode ? .dark : .light)
         }
     }
 }

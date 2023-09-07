@@ -5,9 +5,9 @@
 //  Created by Kamil Kuczaj on 05/09/2023.
 //
 
-import AVFoundation
 import SwiftUI
 import Foundation
+import AVFoundation
 
 
 struct Message: Identifiable, Codable {
@@ -18,65 +18,10 @@ struct Message: Identifiable, Codable {
 }
 
 
-class AudioRecorder: ObservableObject {
-    
-    var audioRecorder: AVAudioRecorder!
-    var audioPlayer: AVAudioPlayer!
-    
-    func getDocumentsDirectory() -> URL {
-        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        return paths[0]
-    }
 
-    
-    func startRecording() {
-        let audioFilename = getDocumentsDirectory().appendingPathComponent("\(Date().timeIntervalSince1970).m4a")
-        
-        let settings = [
-            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
-            AVSampleRateKey: 44100,
-            AVNumberOfChannelsKey: 2,
-            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
-        ]
-        
-        do {
-            audioRecorder = try AVAudioRecorder(url: audioFilename, settings: settings)
-            audioRecorder.record()
-        } catch {
-            print("Could not start recording")
-        }
-    }
-
-    
-    func stopRecording() -> URL {
-        audioRecorder.stop()
-        return audioRecorder.url
-    }
-
-    
-    func playAudio(path: URL) {
-        do {
-            // Configure the audio session for playback through the main speaker
-            let audioSession = AVAudioSession.sharedInstance()
-            try audioSession.setCategory(.playAndRecord, mode: .default, options: .defaultToSpeaker)
-            
-            self.audioPlayer = try AVAudioPlayer(contentsOf: path)
-            self.audioPlayer?.play()
-        } catch {
-            print("Audio playback failed")
-        }
-    }
-
-}
-
-
-struct ContentView: View {
-    @State private var messageText: String = ""
+struct ContactView: View {
+    var contactName: String
     @State private var messages: [Message] = []
-    @State private var showSettings = false
-    @State private var darkMode = UserDefaults.standard.bool(forKey: "DarkMode")
-    @State private var emojiEnable = UserDefaults.standard.bool(forKey: "EmojiEnable")
-    @State private var backgroundColorEnable = UserDefaults.standard.bool(forKey: "BackgroundColorEnable")
     
     @State private var showingAlert = false
     @State private var alertMessage = ""
@@ -85,6 +30,16 @@ struct ContentView: View {
     @State private var isRecording = false
     @State private var showControls = false
     @ObservedObject private var audioRecorder = AudioRecorder()
+    
+    var profileImage: String {
+        if contactName == weronikaName {
+            return "sasha"
+        } else if contactName == babeName {
+            return "mia"
+        } else {
+            return "defaultProfilePic" // Fallback
+        }
+    }
     
     var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
@@ -173,12 +128,23 @@ struct ContentView: View {
         
         dataTask.resume()
     }
-
-
     
     var body: some View {
         NavigationView {
             VStack {
+                HStack {
+                    Spacer()
+                    Image(profileImage)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 60, height: 60)
+                        .clipShape(Circle())
+                    Text(contactName)
+                        .font(.largeTitle)
+                    Spacer()
+                }
+                .padding(.horizontal)
+                Divider()
                 List {
                     ForEach(messages, id: \.id) { msg in
                         HStack {
@@ -230,19 +196,6 @@ struct ContentView: View {
                     }
                 }
             }
-            .navigationBarItems(trailing:
-                Button(action: { showSettings.toggle() }) {
-                    Image(systemName: "line.horizontal.3")
-                }
-                .sheet(isPresented: $showSettings) {
-                    SettingsView(
-                        darkMode: $darkMode,
-                        emojiEnable: $emojiEnable,
-                        backgroundColorEnable: $backgroundColorEnable
-                    )
-                }
-            )
-            .preferredColorScheme(darkMode ? .dark : .light)
             .onAppear {
                 if let savedMessagesData = UserDefaults.standard.value(forKey: "Messages") as? Data,
                    let savedMessages = try? JSONDecoder().decode([Message].self, from: savedMessagesData) {
@@ -257,8 +210,8 @@ struct ContentView: View {
 }
 
 
-struct ContentView_Previews: PreviewProvider {
+struct ContactView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContactView(contactName: weronikaName)
     }
 }
