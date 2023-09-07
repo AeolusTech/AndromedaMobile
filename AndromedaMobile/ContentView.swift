@@ -75,6 +75,8 @@ struct ContentView: View {
     @State private var messages: [Message] = []
     @State private var showSettings = false
     @State private var darkMode = UserDefaults.standard.bool(forKey: "DarkMode")
+    @State private var emojiEnable = UserDefaults.standard.bool(forKey: "EmojiEnable")
+    @State private var backgroundColorEnable = UserDefaults.standard.bool(forKey: "BackgroundColorEnable")
     
     @State private var showingAlert = false
     @State private var alertMessage = ""
@@ -233,7 +235,11 @@ struct ContentView: View {
                     Image(systemName: "line.horizontal.3")
                 }
                 .sheet(isPresented: $showSettings) {
-                    SettingsView(darkMode: $darkMode)
+                    SettingsView(
+                        darkMode: $darkMode,
+                        emojiEnable: $emojiEnable,
+                        backgroundColorEnable: $backgroundColorEnable
+                    )
                 }
             )
             .preferredColorScheme(darkMode ? .dark : .light)
@@ -252,9 +258,8 @@ struct ContentView: View {
 
 struct SettingsView: View {
     @Binding var darkMode: Bool
-    @State private var dummyToggle1 = false
-    @State private var dummyToggle2 = false
-    @State private var dummyToggle3 = false
+    @Binding var emojiEnable: Bool
+    @Binding var backgroundColorEnable: Bool
     
     @ObservedObject private var audioRecorder = AudioRecorder()
     
@@ -270,10 +275,14 @@ struct SettingsView: View {
                     .onChange(of: darkMode) { newValue in
                         UserDefaults.standard.set(newValue, forKey: "DarkMode")
                     }
-                
-                Toggle("Dummy Toggle 1", isOn: $dummyToggle1)
-                Toggle("Dummy Toggle 2", isOn: $dummyToggle2)
-                Toggle("Dummy Toggle 3", isOn: $dummyToggle3)
+                Toggle("Emoji Enable", isOn: $emojiEnable)
+                    .onChange(of: emojiEnable) { newValue in
+                        UserDefaults.standard.set(newValue, forKey: "EmojiEnable")
+                    }
+                Toggle("Background Color", isOn: $backgroundColorEnable)
+                    .onChange(of: backgroundColorEnable) { newValue in
+                        UserDefaults.standard.set(newValue, forKey: "BackgroundColorEnable")
+                    }
 
                 Button(action: {
                     print("First audio PL")
@@ -322,10 +331,16 @@ struct ContentView_Previews: PreviewProvider {
 }
 
 struct SettignsView_Previews: PreviewProvider {
-    @State static var mockDarkMode = false // Or true, depending on what you want to preview
+    @State static var mockDarkMode = false
+    @State static var mockEmojiEnable = false
+    @State static var mockBackgroundColorEnable = false
 
     
     static var previews: some View {
-        SettingsView(darkMode: $mockDarkMode)
+        SettingsView(
+            darkMode: $mockDarkMode,
+            emojiEnable: $mockEmojiEnable,
+            backgroundColorEnable: $mockBackgroundColorEnable
+        )
     }
 }
