@@ -10,10 +10,10 @@ import AVFoundation
 
 struct MessageView: View {
     @State private var isPlaying = false
-    @State private var currentEmoji = "🎵"
-    @State private var currentLyrics = "Let it start"
+    @State private var currentEmoji = "✉️"
+    @State private var currentLyrics = "Press play!"
     
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    let timer = Timer.publish(every: 0.05, on: .main, in: .common).autoconnect()
     var player: AVAudioPlayer?
     
     init() {
@@ -41,6 +41,9 @@ struct MessageView: View {
             
             Text(currentEmoji)
                 .font(.system(size: 100))
+                .fixedSize()
+            
+            Spacer()
             
             Text(currentLyrics)
                 .font(.largeTitle)
@@ -81,24 +84,48 @@ struct MessageView: View {
             case 0..<1.93:
                 currentEmoji = "👋"
                 currentLyrics = "hej Wera!"
-            case 1.93..<4.7:
+            case 1.93..<2.87:
                 currentEmoji = "🤩"
-                currentLyrics = "Wraz z Kubą wpadliśmy na super pomysł."
-            case 4.7..<9.34:
+                currentLyrics = "Wraz z Kubą wpadliśmy"
+            case 2.87..<4.7:
+                currentLyrics = "na super pomysł."
+            case 4.7..<5.3:
                 currentEmoji = "😡"
-                currentLyrics = "Wkurzało nas to, że nagrywając wiadomość głosową i przerabiając ją  na tekst tracimy emocje i kontekst!"
-            case 9.34..<12.22:
+                currentLyrics = "Wkurzało nas to,"
+            case 5.3..<6.15:
+                currentLyrics = "że nagrywając wiadomość"
+            case 6.15..<7.33:
+                currentLyrics = "głosową i przerabiając ją"
+            case 7.33..<8.04:
+                currentLyrics = "na tekst tracimy"
+            case 8.04..<9.34:
+                currentLyrics = "emocje i kontekst!"
+            case 9.34..<10.21:
                 currentEmoji = "🤬"
-                currentLyrics = "Kurde, to jest mega wkurwiające!"
+                currentLyrics = "Kurde no!"
+            case 10.21..<10.95:
+                currentLyrics = "To jest mega"
+            case 10.95..<12.22:
+                currentLyrics = "wkurwiające!"
             case 12.22..<13.50:
                 currentEmoji = "💡"
                 currentLyrics = "Ale czaj to!"
-            case 13.5..<19.8:
+            case 13.5..<14.6:
                 currentEmoji = "🤔"
-                currentLyrics = "Wyobraź sobie, że używasz AI, które automatycznie dodaje emoji i dobiera kolor tła do tekstu."
-            case 19.8..<22.74:
+                currentLyrics = "Wyobraź sobie, że"
+            case 14.6..<16.13:
+                currentLyrics = "używasz AI, które"
+            case 16.13..<17.45:
+                currentLyrics = "automatycznie dodaje"
+            case 17.45..<18.5:
+                currentLyrics = "emoji i dobiera kolor"
+            case 18.5..<19.8:
+                currentLyrics = "tła do tekstu."
+            case 19.8..<20.81:
                 currentEmoji = "🙏"
-                currentLyrics = "Daj mi, proszę znać co o tym sądzisz!"
+                currentLyrics = "Daj mi, proszę znać"
+            case 20.81..<21.84:
+                currentLyrics = "co o tym sądzisz!"
             default:
                 break
             }
