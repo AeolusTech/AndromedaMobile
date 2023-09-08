@@ -13,6 +13,11 @@ func getAudioURL(filename: String, type: String) -> URL? {
     return Bundle.main.url(forResource: filename, withExtension: type)
 }
 
+let audioURLfirstAudioEN = getAudioURL(filename: "firstAudioEN", type: "m4a")
+let audioURLfeedbackEN = getAudioURL(filename: "feedbackEN", type: "m4a")
+let audioURLfirstAudioPL = getAudioURL(filename: "firstAudioPL", type: "m4a")
+let audioURLfeedbackPL = getAudioURL(filename: "feedbackPL", type: "m4a")
+
 
 class AudioRecorder: ObservableObject {
     

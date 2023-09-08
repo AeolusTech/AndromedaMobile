@@ -14,11 +14,6 @@ struct SettingsView: View {
     
     @ObservedObject private var audioRecorder = AudioRecorder()
     
-    let audioURLfirstAudioEN = getAudioURL(filename: "firstAudioEN", type: "m4a")
-    let audioURLfeedbackEN = getAudioURL(filename: "feedbackEN", type: "m4a")
-    let audioURLfirstAudioPL = getAudioURL(filename: "firstAudioPL", type: "m4a")
-    let audioURLfeedbackPL = getAudioURL(filename: "feedbackPL", type: "m4a")
-    
     var body: some View {
         NavigationView {
             Form {
