@@ -16,55 +16,28 @@ struct SettingsView: View {
     
     var body: some View {
         NavigationView {
-            Form {
-                Toggle("Dark Mode", isOn: $darkMode)
-                    .onChange(of: darkMode) { newValue in
-                        UserDefaults.standard.set(newValue, forKey: "DarkMode")
-                    }
-                Toggle("Emoji Enable", isOn: $emojiEnable)
-                    .onChange(of: emojiEnable) { newValue in
-                        UserDefaults.standard.set(newValue, forKey: "EmojiEnable")
-                    }
-                Toggle("Background Color", isOn: $backgroundColorEnable)
-                    .onChange(of: backgroundColorEnable) { newValue in
-                        UserDefaults.standard.set(newValue, forKey: "BackgroundColorEnable")
-                    }
-
-                Button(action: {
-                    print("First audio PL")
-                    if let safeURL = audioURLfirstAudioPL {
-                        audioRecorder.playAudio(path: safeURL)
-                    }
-                }) {
-                    Text("First audio PL")
+            VStack {
+                Form {
+                    Toggle("Dark Mode", isOn: $darkMode)
+                        .onChange(of: darkMode) { newValue in
+                            UserDefaults.standard.set(newValue, forKey: "DarkMode")
+                        }
+                    Toggle("Emoji Enable", isOn: $emojiEnable)
+                        .onChange(of: emojiEnable) { newValue in
+                            UserDefaults.standard.set(newValue, forKey: "EmojiEnable")
+                        }
+                        .disabled(true)
+                    Toggle("Background Color", isOn: $backgroundColorEnable)
+                        .onChange(of: backgroundColorEnable) { newValue in
+                            UserDefaults.standard.set(newValue, forKey: "BackgroundColorEnable")
+                        }
+                        .disabled(true)
                 }
-                Button(action: {
-                    print("Feedback PL")
-                    if let safeURL = audioURLfeedbackPL {
-                        audioRecorder.playAudio(path: safeURL)
-                    }
-                }) {
-                    Text("Feedback PL")
-                }
-                Button(action: {
-                    print("First audio EN")
-                    if let safeURL = audioURLfirstAudioEN {
-                        audioRecorder.playAudio(path: safeURL)
-                    }
-                }) {
-                    Text("First audio EN")
-                }
-                Button(action: {
-                    print("Feedback EN")
-                    if let safeURL = audioURLfeedbackEN {
-                        audioRecorder.playAudio(path: safeURL)
-                    }
-                }) {
-                    Text("Feedback EN")
-                }
+                .navigationBarTitle("Settings")
+                Text("Kamil Kuczaj & Kuba Kułakowski 2023")
             }
-            .navigationBarTitle("Settings")
         }
+        .preferredColorScheme(darkMode ? .dark : .light)
     }
 }
 
