@@ -169,6 +169,33 @@ struct ContactView: View {
                             }
                         }
                     }
+                    if secondMessageListened {
+                        HStack {
+                            Spacer()
+                            VStack(alignment: .trailing) {
+                                HStack {
+                                    Spacer()
+                                    Link(destination: URL(string: formsURL)!) {
+                                        Text(formsURL)
+                                            .bold()
+                                            .foregroundColor(.blue)
+                                    }
+                                }
+                                .frame(maxWidth: .infinity, alignment: .trailing)
+                                .padding(.trailing, 10)
+                                
+                                HStack {
+                                    Text(dateFormatter.string(from: Date())) // Replace with actual time
+                                        .font(.footnote)
+                                    Image("no-profile-photo")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 20, height: 20)
+                                        .clipShape(Circle())
+                                }
+                            }
+                        }
+                    }
                 }
 
                 

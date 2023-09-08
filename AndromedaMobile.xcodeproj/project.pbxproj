@@ -15,11 +15,12 @@
 		4305EBC82AA7838B00908052 /* AndromedaMobileUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4305EBC72AA7838B00908052 /* AndromedaMobileUITests.swift */; };
 		4305EBCA2AA7838B00908052 /* AndromedaMobileUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4305EBC92AA7838B00908052 /* AndromedaMobileUITestsLaunchTests.swift */; };
 		430D47502AAB239F0060EC78 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430D474F2AAB239F0060EC78 /* MessageView.swift */; };
+		430D47542AAB74E10060EC78 /* feedbackEN.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 430D47532AAB74E10060EC78 /* feedbackEN.m4a */; };
+		430D47562AAB761A0060EC78 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430D47552AAB761A0060EC78 /* Utils.swift */; };
 		431460E82AAA563900EE61CB /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431460E72AAA563900EE61CB /* Constants.swift */; };
 		439FDBE22AAA38230001E4B9 /* firstAudioPL.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 439FDBDE2AAA38230001E4B9 /* firstAudioPL.m4a */; };
 		439FDBE32AAA38230001E4B9 /* feedbackPL.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 439FDBDF2AAA38230001E4B9 /* feedbackPL.m4a */; };
 		439FDBE42AAA38230001E4B9 /* firstAudioEN.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 439FDBE02AAA38230001E4B9 /* firstAudioEN.m4a */; };
-		439FDBE52AAA38230001E4B9 /* feedbackEN.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 439FDBE12AAA38230001E4B9 /* feedbackEN.m4a */; };
 		439FDBE82AAA38FC0001E4B9 /* AudioHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439FDBE72AAA38FC0001E4B9 /* AudioHandler.swift */; };
 		439FDBEA2AAA4A820001E4B9 /* MessengerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439FDBE92AAA4A820001E4B9 /* MessengerView.swift */; };
 		439FDBEC2AAA4B8E0001E4B9 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439FDBEB2AAA4B8E0001E4B9 /* SettingsView.swift */; };
@@ -55,11 +56,12 @@
 		4305EBC92AA7838B00908052 /* AndromedaMobileUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AndromedaMobileUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		4305EBD62AA78F6300908052 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		430D474F2AAB239F0060EC78 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
+		430D47532AAB74E10060EC78 /* feedbackEN.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = feedbackEN.m4a; path = ../../../../Documents/andromeda/audio/feedbackEN.m4a; sourceTree = "<group>"; };
+		430D47552AAB761A0060EC78 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		431460E72AAA563900EE61CB /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		439FDBDE2AAA38230001E4B9 /* firstAudioPL.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = firstAudioPL.m4a; sourceTree = "<group>"; };
 		439FDBDF2AAA38230001E4B9 /* feedbackPL.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = feedbackPL.m4a; sourceTree = "<group>"; };
 		439FDBE02AAA38230001E4B9 /* firstAudioEN.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = firstAudioEN.m4a; sourceTree = "<group>"; };
-		439FDBE12AAA38230001E4B9 /* feedbackEN.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = feedbackEN.m4a; sourceTree = "<group>"; };
 		439FDBE72AAA38FC0001E4B9 /* AudioHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioHandler.swift; sourceTree = "<group>"; };
 		439FDBE92AAA4A820001E4B9 /* MessengerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessengerView.swift; sourceTree = "<group>"; };
 		439FDBEB2AAA4B8E0001E4B9 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 				439FDBEB2AAA4B8E0001E4B9 /* SettingsView.swift */,
 				431460E72AAA563900EE61CB /* Constants.swift */,
 				430D474F2AAB239F0060EC78 /* MessageView.swift */,
+				430D47552AAB761A0060EC78 /* Utils.swift */,
 			);
 			path = AndromedaMobile;
 			sourceTree = "<group>";
@@ -157,8 +160,8 @@
 			isa = PBXGroup;
 			children = (
 				439FDBE02AAA38230001E4B9 /* firstAudioEN.m4a */,
+				430D47532AAB74E10060EC78 /* feedbackEN.m4a */,
 				439FDBDE2AAA38230001E4B9 /* firstAudioPL.m4a */,
-				439FDBE12AAA38230001E4B9 /* feedbackEN.m4a */,
 				439FDBDF2AAA38230001E4B9 /* feedbackPL.m4a */,
 			);
 			path = Audio;
@@ -269,10 +272,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				439FDBE22AAA38230001E4B9 /* firstAudioPL.m4a in Resources */,
-				439FDBE52AAA38230001E4B9 /* feedbackEN.m4a in Resources */,
 				4305EBB42AA7838B00908052 /* Preview Assets.xcassets in Resources */,
 				439FDBE42AAA38230001E4B9 /* firstAudioEN.m4a in Resources */,
 				4305EBB12AA7838B00908052 /* Assets.xcassets in Resources */,
+				430D47542AAB74E10060EC78 /* feedbackEN.m4a in Resources */,
 				439FDBE32AAA38230001E4B9 /* feedbackPL.m4a in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -305,6 +308,7 @@
 				439FDBEC2AAA4B8E0001E4B9 /* SettingsView.swift in Sources */,
 				430D47502AAB239F0060EC78 /* MessageView.swift in Sources */,
 				431460E82AAA563900EE61CB /* Constants.swift in Sources */,
+				430D47562AAB761A0060EC78 /* Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
