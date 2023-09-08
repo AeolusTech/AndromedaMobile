@@ -24,6 +24,15 @@ struct MessageView: View {
                 print("Couldn't load the audio file")
             }
         }
+        
+        do {
+            // Initialize the audio player to ignore the DoNotDisturb switch on the side of the iPhone
+            try AVAudioSession.sharedInstance().setCategory(.playback)
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch {
+            print("Setting category to AVAudioSessionCategoryPlayback failed.")
+        }
+
     }
 
     var body: some View {
@@ -65,15 +74,31 @@ struct MessageView: View {
     
     private func updateTimeBasedContent() {
         if let player = player, player.isPlaying {
-            let currentTime = player.currentTime
-            switch currentTime {
-            case 0..<10:
-                currentEmoji = "🎵"
-                currentLyrics = "Lyrics 1"
-            case 10..<20:
-                currentEmoji = "🔥"
-                currentLyrics = "Lyrics 2"
-            // Add more cases as needed
+            let currentTime = String(format: "%.2f", player.currentTime)
+            let currentFloatTime = Float(currentTime) ?? 0.0
+
+            switch currentFloatTime {
+            case 0..<1.93:
+                currentEmoji = "👋"
+                currentLyrics = "hej Wera!"
+            case 1.93..<4.7:
+                currentEmoji = "🤩"
+                currentLyrics = "Wraz z Kubą wpadliśmy na super pomysł."
+            case 4.7..<9.34:
+                currentEmoji = "😡"
+                currentLyrics = "Wkurzało nas to, że nagrywając wiadomość głosową i przerabiając ją  na tekst tracimy emocje i kontekst!"
+            case 9.34..<12.22:
+                currentEmoji = "🤬"
+                currentLyrics = "Kurde, to jest mega wkurwiające!"
+            case 12.22..<13.50:
+                currentEmoji = "💡"
+                currentLyrics = "Ale czaj to!"
+            case 13.5..<19.8:
+                currentEmoji = "🤔"
+                currentLyrics = "Wyobraź sobie, że używasz AI, które automatycznie dodaje emoji i dobiera kolor tła do tekstu."
+            case 19.8..<22.74:
+                currentEmoji = "🙏"
+                currentLyrics = "Daj mi, proszę znać co o tym sądzisz!"
             default:
                 break
             }

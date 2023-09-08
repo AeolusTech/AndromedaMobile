@@ -100,6 +100,7 @@ struct ContactView: View {
                                             let vc = UIHostingController(rootView: MessageView())
                                             keyWindow.rootViewController?.present(vc, animated: true, completion: nil)
                                         }
+                                    firstMessageListened = true
                                 }) {
                                     Image(systemName: "play.fill")
                                 }
