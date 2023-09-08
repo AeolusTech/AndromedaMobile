@@ -14,26 +14,7 @@ let babeName: String = "Babe ❤️"
 let firstAudioTranscriptPL = """
 hej Wera! 👋 Wraz z Kubą wpadliśmy na super pomysł. 🤩 Wkurzało nas to, że nagrywając wiadomość głosową i przerabiając ją  na tekst tracimy emocje i kontekst! 😡 Kurde, to jest mega wkurwiające! 🤬 Ale czaj to!💡 Wyobraź sobie, że używasz AI, które automatycznie dodaje emoji i dobiera kolor tła do tekstu. 🤔 Daj mi, proszę znać co o tym sądzisz! 🙏
 """
-let firstAudioTokensPL = """
-👋 hej Wera!
-🤩 Wraz z Kubą wpadliśmy
-🤩 na super pomysł.
-😡 Wkurzało nas to,
-😡 że nagrywając wiadomość
-😡 głosową i przerabiając ją
-😡 na tekst tracimy
-😡 emocje i kontekst!
-🤬 Kurde, to jest mega
-🤬 wkurwiające!
-💡 Ale czaj to!
-🤔 Wyobraź sobie, że
-🤔 używasz AI, które
-🤔 automatycznie dodaje
-🤔 emoji i dobiera kolor
-🤔 tła do tekstu.
-🙏 Daj mi, proszę znać
-🙏 co o tym sądzisz!
-"""
+
 
 let feedbackTranscriptPL = """
 😌 Kiedy odsłuchasz

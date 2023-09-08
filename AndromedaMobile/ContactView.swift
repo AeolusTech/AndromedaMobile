@@ -97,7 +97,7 @@ struct ContactView: View {
                                 Button(action: {
                                     if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
                                            let keyWindow = windowScene.windows.first(where: { $0.isKeyWindow }) {
-                                            let vc = UIHostingController(rootView: MessageView())
+                                            let vc = UIHostingController(rootView: MessageView(person: contactName, whichMessage: 1))
                                             keyWindow.rootViewController?.present(vc, animated: true, completion: nil)
                                         }
                                     firstMessageListened = true
@@ -115,7 +115,7 @@ struct ContactView: View {
                             
                             if firstMessageListened {
                                 HStack {
-                                    Text(firstAudioTranscriptPL)
+                                    Text(contactName == weronikaName ? firstAudioTranscriptPL : firstAudioTranscriptEN)
                                 }
                             }
                             
@@ -135,7 +135,12 @@ struct ContactView: View {
                         VStack(alignment: .trailing) {
                             HStack {
                                 Button(action: {
-                                    // Show overlay
+                                    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                                           let keyWindow = windowScene.windows.first(where: { $0.isKeyWindow }) {
+                                            let vc = UIHostingController(rootView: MessageView(person: contactName, whichMessage: 2))
+                                            keyWindow.rootViewController?.present(vc, animated: true, completion: nil)
+                                        }
+                                    secondMessageListened = true
                                 }) {
                                     Image(systemName: "play.fill")
                                 }
@@ -149,7 +154,7 @@ struct ContactView: View {
                             
                             if secondMessageListened {
                                 HStack {
-                                    Text(feedbackTranscriptPL)
+                                    Text(contactName == weronikaName ? feedbackTranscriptPL : feedbackTranscriptEN)
                                 }
                             }
                             
