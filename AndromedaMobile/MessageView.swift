@@ -26,7 +26,7 @@ struct MessageView: View {
         messageNo = whichMessage
         var chosenAudio: URL?
         
-        if (messagingWith == weronikaName) {
+        if (messagingWith == kamilPL) {
             if (messageNo == 1) {
                 chosenAudio = audioURLfirstAudioPL
             } else {
@@ -71,20 +71,6 @@ struct MessageView: View {
                 .font(.largeTitle)
                 .bold()
                 .foregroundColor(.black)
-                .background(
-                    Text(currentLyrics)
-                        .font(.largeTitle)
-                        .bold()
-                        .foregroundColor(.white)
-                        .offset(x: 2, y: 2)
-                )
-                .overlay(
-                    Text(currentLyrics)
-                        .font(.largeTitle)
-                        .bold()
-                        .foregroundColor(.white)
-                        .offset(x: -2, y: -2)
-                )
 
             
             Spacer()
@@ -321,7 +307,7 @@ struct MessageView: View {
     }
     
     private func updateTimeBasedContent() {
-        if (messagingWith == weronikaName) {
+        if (messagingWith == kamilPL) {
             if (messageNo == 1) {
                 playFirstAudioPL()
             } else {
@@ -340,6 +326,6 @@ struct MessageView: View {
 
 struct MessageView_Previews: PreviewProvider {
     static var previews: some View {
-        MessageView(person: weronikaName, whichMessage: 2)
+        MessageView(person: kamilPL, whichMessage: 2)
     }
 }

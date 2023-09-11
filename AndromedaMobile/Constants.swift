@@ -8,8 +8,8 @@
 import Foundation
 
 
-let weronikaName: String = "Weronika 🙋🏼‍♀️"
-let babeName: String = "Babe ❤️"
+let kamilPL: String = "Kamil 🇵🇱"
+let kamilEN: String = "Kamil 🇺🇸"
 
 let formsURL = "https://forms.gle/uz4WDHekZ1C77rDt8"
 

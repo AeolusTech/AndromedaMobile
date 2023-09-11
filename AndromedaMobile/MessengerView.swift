@@ -19,16 +19,16 @@ struct MessengerView: View {
             ScrollView {
                 VStack {
                     // Do this for each entry
-                    NavigationLink(destination: ContactView(contactName: weronikaName)) {
+                    NavigationLink(destination: ContactView(contactName: kamilPL)) {
                         HStack {
-                            Image("sasha")
+                            Image("avatarPL")
                                 .resizable()
                                 .scaledToFill()
                                 .frame(width: 60, height: 60)
                                 .clipShape(Circle())
                                 .padding(.leading, 20)
                             
-                            Text(weronikaName)
+                            Text(kamilPL)
                                 .font(.title2)
                                 .padding(.leading, 15)
                                 .padding()
@@ -38,16 +38,16 @@ struct MessengerView: View {
                         .padding(.bottom, 10)
                     }
 
-                    NavigationLink(destination: ContactView(contactName: babeName)) {
+                    NavigationLink(destination: ContactView(contactName: kamilEN)) {
                         HStack {
-                            Image("mia")
+                            Image("avatarEN")
                                 .resizable()
                                 .scaledToFill()
                                 .frame(width: 60, height: 60)
                                 .clipShape(Circle())
                                 .padding(.leading, 20)
 
-                            Text(babeName)
+                            Text(kamilEN)
                                 .font(.title2)
                                 .padding(.leading, 15)
                                 .padding()

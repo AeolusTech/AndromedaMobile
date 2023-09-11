@@ -33,10 +33,10 @@ struct ContactView: View {
     @State private var secondMessageListened = false
     
     var profileImage: String {
-        if contactName == weronikaName {
-            return "sasha"
-        } else if contactName == babeName {
-            return "mia"
+        if contactName == kamilPL {
+            return "avatarPL"
+        } else if contactName == kamilEN {
+            return "avatarEN"
         } else {
             return "no-profile-photo" // Fallback
         }
@@ -46,6 +46,13 @@ struct ContactView: View {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd MMM HH:mm"
         return formatter
+    }
+    
+    var responseText: String {
+        if contactName == kamilPL {
+            return "Hej! Co u Ciebie słychać?"
+        }
+        return "Hey! How are you?"
     }
     
     func toggleRecording() {
@@ -94,6 +101,31 @@ struct ContactView: View {
                         Spacer()
                         VStack(alignment: .trailing) {
                             HStack {
+                                Text(responseText)
+                                Spacer()
+                                
+                            }
+                            
+                            .frame(maxWidth: .infinity, alignment: .trailing)
+                            .padding(.trailing, 10)
+                            
+                            HStack {
+                                Image(profileImage)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 20, height: 20)
+                                    .clipShape(Circle())
+                                Text(dateFormatter.string(from: Date()))
+                                    .font(.footnote)
+                                Spacer()
+                            }
+                        }
+                    }
+                    .background(.cyan)
+                    HStack {
+                        Spacer()
+                        VStack(alignment: .trailing) {
+                            HStack {
                                 Button(action: {
                                     if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
                                            let keyWindow = windowScene.windows.first(where: { $0.isKeyWindow }) {
@@ -115,7 +147,7 @@ struct ContactView: View {
                             
                             if firstMessageListened {
                                 HStack {
-                                    Text(contactName == weronikaName ? firstAudioTranscriptPL : firstAudioTranscriptEN)
+                                    Text(contactName == kamilPL ? firstAudioTranscriptPL : firstAudioTranscriptEN)
                                 }
                             }
                             
@@ -154,7 +186,7 @@ struct ContactView: View {
                             
                             if secondMessageListened {
                                 HStack {
-                                    Text(contactName == weronikaName ? feedbackTranscriptPL : feedbackTranscriptEN)
+                                    Text(contactName == kamilPL ? feedbackTranscriptPL : feedbackTranscriptEN)
                                 }
                             }
                             
@@ -252,6 +284,6 @@ struct ContactView: View {
 
 struct ContactView_Previews: PreviewProvider {
     static var previews: some View {
-        ContactView(contactName: weronikaName)
+        ContactView(contactName: kamilPL)
     }
 }
